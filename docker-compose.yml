@@ -1,0 +1,18 @@
+version: '3.9'
+services:
+    db:
+        image: mysql:8.1
+        container_name: harmona-mysql
+        restart: always
+        environment:
+            - MYSQL_DATABASE=mysqlDB
+            - MYSQL_ROOT_PASSWORD=admin
+        ports:
+            - '3306:3306'
+    localstack:
+        container_name: harmona-localstack
+        image: localstack/localstack:s3-latest
+        ports:
+            - '4566-4583:4566-4583'
+        volumes:
+            - ./.script/init-s3-bucket.py:/etc/localstack/init/ready.d/init-s3-bucket.py
